@@ -1,6 +1,6 @@
-*.parquet
 *.csv
-*.zip
-data/
-.DS_Store
+*.parquet
+Chicago_Taxi/
 .ipynb_checkpoints/
+__pycache__/
+.DS_Store
