@@ -1,5 +1,7 @@
 use taxi;
 
+DROP STAGE if exists fengttt_public;
+
 CREATE STAGE fengttt_public
     URL = 's3://fengttt-public-data/'
     CREDENTIALS = {
