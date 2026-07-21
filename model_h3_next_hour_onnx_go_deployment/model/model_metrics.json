@@ -1,0 +1,50 @@
+{
+  "task": "predict pickup count for the next hour in the same H3 cell",
+  "train_target_period": "2022-01-01 through 2023-12-31",
+  "test_target_period": "2024-01-01 through 2024-12-31",
+  "train_rows": 875750,
+  "test_rows": 439100,
+  "feature_count": 61,
+  "fit_seconds": 16.452021837234497,
+  "model": {
+    "mae": 12.657814562933723,
+    "rmse": 24.385609585979847,
+    "r2": 0.9412322766933156,
+    "mean_actual": 93.11889319061717,
+    "mae_pct_of_mean": 13.593175486979636
+  },
+  "naive_current_hour": {
+    "mae": 20.046993851058986,
+    "rmse": 36.204721775523815,
+    "r2": 0.8704605460346814,
+    "mean_actual": 93.11889319061717,
+    "mae_pct_of_mean": 21.52838501851841
+  },
+  "naive_last_week": {
+    "mae": 19.19705534046914,
+    "rmse": 40.60047855666031,
+    "r2": 0.8370951784104267,
+    "mean_actual": 93.11889319061717,
+    "mae_pct_of_mean": 20.61563951492872
+  },
+  "python_onnx_parity": {
+    "max_absolute_difference": 0.000244140625,
+    "mean_absolute_difference": 4.563468463159324e-06,
+    "within_1e-4_count": 438697,
+    "total_count": 439100
+  },
+  "versions": {
+    "python": "3.12.4",
+    "numpy": "2.5.1",
+    "pandas": "3.0.3",
+    "scikit_learn": "1.7.2",
+    "onnx": "1.19.1",
+    "onnxruntime": "1.27.0"
+  },
+  "total_seconds": 20.445240020751953,
+  "artifacts": {
+    "model_sha256": "8bd58d26046c2f1669de283bc1fe79c2ece1aa4e9ad37ec2c878ababc2915f9f",
+    "schema_sha256": "2042302990d03f60954cb5345143bf320781a18d39cc1061bdee2283031e81ac",
+    "test_cases_sha256": "42527f21ea4f3893e3c41882d363ada512b033f582d72e42f741bab298192af8"
+  }
+}
