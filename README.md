@@ -49,7 +49,9 @@ This notebook compares several ways to answer a yes-or-no question: does this tr
 This notebook compares time-series and feature-based forecasting on the same hourly H3 task. It uses the previous 28 days to predict the next 24 hours and compares a last-week baseline, several Chronos-2 settings, and LightGBM models. Every method uses the same forecast times and targets, so the comparison stays fair.
 这个 Notebook 在同一个小时级 H3 客流任务上比较时间序列模型和特征模型。实验使用过去 28 天预测未来 24 小时，并对比上周同期基线、多种 Chronos-2 设置和 LightGBM 模型。所有方法使用相同的预测时间点和目标，因此结果可以公平比较。
 
-## ONNX and Go model deployment / ONNX 与 Go 模型部署
+## ONNX and Go model deployments / ONNX 与 Go 模型部署
+
+### H3 next-hour demand model / H3 下一小时客流模型
 
 `model_h3_next_hour_onnx_go_deployment/`
 
@@ -65,6 +67,23 @@ Run the included parity test from the repository root:
 
 A final `PASS` means the Go program and Python ONNX Runtime produce matching predictions within the configured tolerance. See the folder's own `README.md` for setup, inference, retraining, and new-machine reproduction steps.
 最后显示 `PASS`，表示 Go 程序与 Python ONNX Runtime 的预测结果在设定误差范围内一致。环境配置、模型推理、重新训练和新机器复现步骤请查看该文件夹内的 `README.md`。
+
+### Two-stage recorded-tip model / 两阶段记录小费模型
+
+`model_two_stage_tip_onnx_go_deployment/`
+
+This folder deploys the two-stage recorded-tip model used in the tip prediction experiment. The first ONNX model estimates whether a positive tip is recorded, and the second ONNX model estimates the amount when a positive tip is recorded. The Go program combines them as `tip probability × positive-tip amount` to produce the expected recorded tip. The package includes both ONNX files, a fixed 17-feature schema, Python and Go validation code, example inputs, model metrics, and bilingual documentation.
+这个文件夹部署小费预测实验中的两阶段记录小费模型。第一个 ONNX 模型判断是否记录正小费，第二个 ONNX 模型预测记录正小费时的金额。Go 程序使用“记录小费概率 × 正小费金额”计算记录小费期望值。部署包包含两个 ONNX 文件、固定的 17 个特征结构、Python 与 Go 验证代码、示例输入、模型指标和中英双语文档。
+
+Run its parity test from the repository root:
+在仓库根目录运行它的跨语言一致性测试：
+
+```bash
+./model_two_stage_tip_onnx_go_deployment/run_go_test.sh
+```
+
+A final `PASS` confirms that both ONNX stages produce matching results in Python and Go. The model improves expected-tip MAE over a simple training-mean baseline, but it remains a baseline because tipping behavior also depends on information that is not available in the trip table.
+最后显示 `PASS`，说明两个 ONNX 阶段在 Python 和 Go 中得到一致结果。该模型的期望小费 MAE 优于简单训练期平均值基线，但由于小费行为还受到行程表中没有的信息影响，因此它仍然是一个基线模型。
 
 ## Configuration / 配置
 

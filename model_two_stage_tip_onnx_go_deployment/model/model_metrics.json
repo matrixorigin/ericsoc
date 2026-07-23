@@ -1,0 +1,53 @@
+{
+  "task": "two-stage expected recorded-tip prediction",
+  "target_note": "tip is the recorded field in completed-trip data; unrecorded cash tips are not observed",
+  "train_period": "2022-01-01 through 2023-12-31",
+  "test_period": "2024-01-01 through 2024-12-31",
+  "train_rows": 119468,
+  "positive_tip_train_rows": 30460,
+  "test_rows": 59656,
+  "feature_count": 17,
+  "tip_cap": 13.0,
+  "fit_seconds": 3.2439279556274414,
+  "classification": {
+    "roc_auc": 0.6424761236756255,
+    "pr_auc": 0.37120843978619633,
+    "brier": 0.18396504846051553,
+    "precision_at_0_5": 0.5086505190311419,
+    "recall_at_0_5": 0.018853405155829166,
+    "f1_at_0_5": 0.03635913925302993
+  },
+  "expected_tip_model": {
+    "mae": 1.4632393148622431,
+    "rmse": 2.0802697068546427,
+    "r2": 0.13441801406482168,
+    "mean_actual": 1.079572884538018
+  },
+  "training_mean_baseline": {
+    "mae": 1.576216537478911,
+    "rmse": 2.2364035939501394,
+    "r2": -0.0003898640568285039,
+    "mean_actual": 1.079572884538018
+  },
+  "positive_tip_amount_mae": 1.2249626223668237,
+  "python_onnx_parity": {
+    "probability_max_absolute_difference": 1.4421268701436674e-07,
+    "positive_amount_max_absolute_difference": 3.2537619265582407e-06,
+    "expected_tip_max_absolute_difference": 1.883589359152893e-06
+  },
+  "versions": {
+    "python": "3.12.4",
+    "numpy": "2.5.1",
+    "pandas": "3.0.3",
+    "scikit_learn": "1.7.2",
+    "onnx": "1.19.1",
+    "onnxruntime": "1.27.0"
+  },
+  "total_seconds": 4.2212910652160645,
+  "artifacts": {
+    "presence_model_sha256": "fa966e487f6335d3d44f7c8fb493a59ff52fbdbed53897a1ae4f5b5c90fa17d2",
+    "amount_model_sha256": "a38f0ded492a9d4e4d4f209de9f54a60d06546e59b49954543bde4cf0bd459a9",
+    "schema_sha256": "f9eb6e5cb5536dd65c86dfae849b80ccc688f19bdc8b23d8f86f79ed2be717eb",
+    "test_cases_sha256": "ca8f199706d841ecde89ed2fc4d269266911809f11631e0c2370681e6dbb4bb6"
+  }
+}
