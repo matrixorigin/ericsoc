@@ -1,4 +1,4 @@
-module github.com/matrixorigin/ericsoc/deployment/06_h3_next_hour_onnx_go_deployment
+module github.com/matrixorigin/ericsoc/model_h3_next_hour_onnx_go_deployment
 
 go 1.24
 

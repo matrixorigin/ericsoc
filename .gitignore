@@ -4,3 +4,9 @@ Chicago_Taxi/
 .ipynb_checkpoints/
 __pycache__/
 .DS_Store
+.Rhistory
+.env
+.venv/
+.venv-*/
+*.py[cod]
+notebook_outputs_*/

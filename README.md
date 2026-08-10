@@ -1,94 +1,71 @@
-# Chicago TNP Analysis and Model Deployment
-# Chicago TNP 数据分析与模型部署
+# Chicago TNP Analytics and Event Simulation
 
-This repository explores Chicago Transportation Network Provider (TNP) trip data from 2022 to 2024. The project uses MatrixOne for full-data aggregation, H3 cells for spatial analysis, and Python models for demand, peak, and recorded-tip prediction.
-本仓库分析 2022 至 2024 年的 Chicago Transportation Network Provider（TNP）行程数据。项目使用 MatrixOne 完成全量数据聚合，使用 H3 网格进行空间分析，并通过 Python 模型预测客流、高峰持续情况和记录小费。
+# Chicago TNP 分析与赛事模拟
 
-The notebooks are numbered in the order the experiments were developed. Each notebook can also be read as a separate experiment.
-Notebook 按实验推进顺序编号，同时每个 Notebook 也可以作为一个独立实验阅读。
+This repository contains an end-to-end analytics workflow for the City of Chicago Transportation Network Provider (TNP) trip data. The workflow starts with full CSV validation and MatrixOne tables, builds hourly H3 demand models, tests event detection, and ends with a 20,000-run business simulator for large events near Soldier Field. 本仓库包含一套完整的 Chicago TNP 出行数据分析流程。流程从全量 CSV 验证和 MatrixOne 数据表开始，继续完成小时级 H3 客流建模和赛事识别，最后建立 Soldier Field 大型活动的 2 万次业务模拟器。
 
-## Notebook overview / Notebook 内容概览
+The public data covers 2022-2024 and contains 243,479,296 completed trips after loading. Large SQL work stays in MatrixOne. Python receives smaller aggregates for analysis and modeling. 公开数据覆盖 2022-2024，载入后共有 243,479,296 条已完成行程。大规模 SQL 计算保留在 MatrixOne 中，Python 只读取较小的聚合结果用于分析和建模。
 
-### 01. Hourly H3 demand forecasting and spatial analysis
-### 01. 小时级 H3 客流预测与空间分析
+## Key validated results / 已验证的关键结果
 
-`01_hourly_h3_demand_forecasting_and_spatial_analysis.ipynb`
+| Area / 方向                             | Recorded result / 已记录结果                                                                                                                                                                        |
+|------------------------------------|------------------------------------|
+| Full data foundation / 全量数据基础     | 243,479,296 clean and H3-enriched trip rows. / 243,479,296 条清洗并加入 H3 的行程。                                                                                                                 |
+| Next-hour H3 demand / 下一小时 H3 客流  | MAE 12.66 pickups and R-squared 0.9412 on 2024. / 2024 测试集 MAE 12.66、R² 0.9412。                                                                                                                |
+| Recorded-tip model / 记录小费模型       | Expected-tip MAE improved from about \$1.58 to \$1.46 in the portable model package. / 可移植模型将期望小费 MAE 从约 1.58 美元降至 1.46 美元。                                                      |
+| Bears event prediction / Bears 赛事预测 | Known-schedule event model improved pickup MAE by 44.4% and dropoff MAE by 68.5% over a normal-day baseline. / 已知赛程时，赛事模型相对普通日基线将 pickup MAE 改善 44.4%，dropoff MAE 改善 68.5%。 |
+| Blind event screening / 赛事盲测筛选    | Top 8 found 5 of 8 games; Top 20 found all 8 games. / Top 8 找到 8 场中的 5 场，Top 20 找到全部 8 场。                                                                                              |
+| Event demand generator / 赛事需求生成器 | Validation on eight unseen 2024 games: pickup WAPE 19.15%, dropoff WAPE 22.78%. / 在 8 场未参与训练的 2024 比赛上，pickup WAPE 19.15%，dropoff WAPE 22.78%。                                        |
+| Go deployment / Go 部署                 | Python and Go ONNX predictions match within 0.001 on fixed parity cases. / 固定测试样本中，Python 与 Go ONNX 预测差异小于 0.001。                                                                   |
 
-This notebook starts with hourly pickup demand in each H3 cell. It checks how sensitive the anomaly score is, predicts demand 1, 2, 3, and 6 hours ahead, compares pickup and dropoff flows, and looks at whether a peak spreads to nearby H3 cells. In simple terms, it asks: when one area becomes busy, what may happen next in the same area and around it?
-这个 Notebook 从每个 H3 网格的小时上车量开始，检查异常分数的敏感度，预测未来 1、2、3、6 小时的客流，对比上车和下车流量，并分析高峰是否会扩散到附近的 H3 网格。简单来说，它研究的是：一个区域开始变忙之后，这个区域和周边区域接下来可能发生什么。
+These results are planning and research results. Completed trips are not the same as all ride requests, and simulator profit is contribution profit under stated assumptions rather than audited company net profit. 这些结果用于规划和研究。已完成行程不等同于全部叫车请求；模拟器利润是基于明确假设计算的贡献利润，不是企业审计后的净利润。
 
-### 02. Two-stage recorded-tip amount prediction
-### 02. 两阶段记录小费金额预测
+## Repository guide / 仓库说明
 
-`02_two_stage_tip_amount_prediction.ipynb`
+Run the numbered notebooks in order when rebuilding the full workflow. Notebooks 03-06 are comparison or deployment branches and can be rerun after Notebook 01 has validated the MatrixOne tables. 完整重建时请按编号运行。Notebook 03-06 属于模型对比或部署分支，在 Notebook 01 验证 MatrixOne 数据表后也可以单独运行。
 
-This notebook predicts the expected recorded tip for a completed trip. It first predicts whether the trip has a positive recorded tip, and then predicts the tip amount only for trips with a positive tip. The two results are combined into one expected-tip value. It also compares different feature groups to show how pickup time, dropoff time, location changes, fare, distance, and trip duration help the prediction.
-这个 Notebook 预测一笔已完成行程的记录小费期望值。模型先判断该行程是否记录了正小费，再只针对有正小费的行程预测小费金额，最后把两个结果合并成一个期望小费值。实验还比较了不同特征组，用来说明上下车时间、地点变化、车费、距离和行程时长对预测有什么帮助。
+1.  [`01_data_ingestion_validation_and_h3_preparation.ipynb`](01_data_ingestion_validation_and_h3_preparation.ipynb) Validates raw schemas, MatrixOne table lineage, clean rows, H3 coverage, and the shared train/test split. / 验证原始 schema、MatrixOne 表关系、清洗行数、H3 覆盖和统一训练测试切分。
+2.  [`02_hourly_h3_demand_forecasting_and_spatial_dynamics.ipynb`](02_hourly_h3_demand_forecasting_and_spatial_dynamics.ipynb) Builds hourly pickup/dropoff data, anomaly sensitivity, multi-horizon forecasts, supply-pressure proxies, and neighbor spread. / 构建小时级上下车数据、异常敏感度、多跨度预测、供给压力代理和周边扩散分析。
+3.  [`03_two_stage_tip_prediction_and_llm_tree_comparison.ipynb`](03_two_stage_tip_prediction_and_llm_tree_comparison.ipynb) Predicts recorded-tip probability and positive amount, then compares LLM and tree models on the same yes/no cases. / 预测记录小费概率和正小费金额，再在相同样本上比较大模型与树模型的有无小费判断。
+4.  [`04_llm_peak_continuation_benchmark.ipynb`](04_llm_peak_continuation_benchmark.ipynb) Tests whether a confirmed peak remains after 1, 3, or 6 hours using simple baselines, GBM, and an OpenAI model. / 使用简单基线、GBM 和 OpenAI 模型判断已确认高峰在 1、3、6 小时后是否继续。
+5.  [`05_chronos2_vs_lightgbm_forecasting_benchmark.ipynb`](05_chronos2_vs_lightgbm_forecasting_benchmark.ipynb) Compares Chronos-2 and LightGBM on the same 24-hour forecast windows. / 在相同的 24 小时预测窗口上比较 Chronos-2 与 LightGBM。
+6.  [`06_h3_next_hour_onnx_go_deployment_validation.ipynb`](06_h3_next_hour_onnx_go_deployment_validation.ipynb) Inspects the deployable ONNX package and verifies Python/Go prediction parity. / 检查可部署 ONNX 模型包并验证 Python 与 Go 的预测一致性。
+7.  [`07_bears_event_sensitivity_and_2024_blind_detection.ipynb`](07_bears_event_sensitivity_and_2024_blind_detection.ipynb) Learns Bears home-game pickup/dropoff curves, predicts known 2024 games, and performs a schedule-free blind screen. / 学习 Bears 主场比赛上下车曲线，预测已知的 2024 比赛，并进行不提供赛程的盲测筛选。
+8.  [`08_event_business_monte_carlo_simulator.ipynb`](08_event_business_monte_carlo_simulator.ipynb) Validates an event-demand generator and compares four fleet sizes with three pricing strategies over 20,000 two-day scenarios. / 验证赛事需求生成器，并在 2 万个连续两天场景中比较四种车队规模和三种定价策略。
 
-### 03. LLM peak-continuation benchmark
-### 03. 大模型高峰持续性预测对比
+## Environment / 环境
 
-`03_llm_peak_continuation_benchmark.ipynb`
+### Main notebooks / 主 Notebook
 
-This notebook focuses on one direct question: after an H3 cell is already in a peak, will the peak still be active 1, 3, or 6 hours later? It gives the same compact hourly summary to deterministic rules, a gradient-boosting model, and an OpenAI model, then compares their results on the same 2024 cases. The LLM reads aggregated features instead of the full trip table.
-这个 Notebook 专注于一个直接的问题：当一个 H3 网格已经处于高峰时，1、3、6 小时后高峰是否仍会持续。实验把相同的小时级摘要分别交给确定性规则、梯度提升模型和 OpenAI 模型，并在相同的 2024 年案例上比较结果。大模型读取的是聚合后的特征，而不是完整行程表。
+-   Python 3.12 is the validated main environment. / 主环境已在 Python 3.12 验证。
+-   Notebook 05 uses Python 3.11 because of its Chronos-2 runtime. / Notebook 05 因 Chronos-2 运行环境使用 Python 3.11。
+-   MatrixOne must expose `chicago_tnp.unified_trips_clean` and `chicago_tnp.unified_trips_h3_res9` for the full analysis. / 全量分析需要 MatrixOne 提供这两张表。
+-   Go 1.24 or newer is required only for the Go deployment checks. / 只有 Go 部署验证需要 Go 1.24 或更高版本。
 
-### 04. Recorded-tip LLM vs. tree comparison
-### 04. 记录小费的大模型与树模型对比
+Install the common Python environment: 安装通用 Python 环境：
 
-`04_recorded_tip_llm_vs_tree_comparison.ipynb`
-
-This notebook compares several ways to answer a yes-or-no question: does this trip have a positive recorded tip? A shallow decision tree shows a small set of readable rules, LightGBM provides a stronger machine-learning baseline, and an OpenAI model makes the same decision from a structured trip summary. This makes it possible to compare predictive quality, model cost, and how easy each method is to explain.
-这个 Notebook 比较几种方法对同一个二分类问题的判断：这笔行程是否记录了正小费。浅层决策树展示少量容易阅读的判断规则，LightGBM 提供更强的机器学习基准，OpenAI 模型则根据结构化行程摘要作出同样的判断。这样可以同时比较预测效果、模型成本和解释难度。
-
-### 05. Chronos-2 vs. LightGBM forecasting benchmark
-### 05. Chronos-2 与 LightGBM 客流预测对比
-
-`05_chronos2_vs_lightgbm_forecasting_benchmark.ipynb`
-
-This notebook compares time-series and feature-based forecasting on the same hourly H3 task. It uses the previous 28 days to predict the next 24 hours and compares a last-week baseline, several Chronos-2 settings, and LightGBM models. Every method uses the same forecast times and targets, so the comparison stays fair.
-这个 Notebook 在同一个小时级 H3 客流任务上比较时间序列模型和特征模型。实验使用过去 28 天预测未来 24 小时，并对比上周同期基线、多种 Chronos-2 设置和 LightGBM 模型。所有方法使用相同的预测时间点和目标，因此结果可以公平比较。
-
-## ONNX and Go model deployments / ONNX 与 Go 模型部署
-
-### H3 next-hour demand model / H3 下一小时客流模型
-
-`model_h3_next_hour_onnx_go_deployment/`
-
-This folder turns one forecasting experiment into a small deployment package. The model is trained in Python, exported to ONNX, and loaded in Go to predict completed pickup trips in the same H3 cell one hour later. It includes the ONNX model, the fixed 61-feature schema, Python validation code, Go inference code, test cases, and a macOS Apple Silicon ONNX Runtime library.
-这个文件夹把其中一个客流预测实验整理成可部署的小型项目。模型在 Python 中训练并导出为 ONNX，然后由 Go 加载，用来预测同一 H3 网格下一小时的已完成上车订单数。文件夹包含 ONNX 模型、固定的 61 个特征结构、Python 验证代码、Go 推理代码、测试样本，以及适用于 macOS Apple Silicon 的 ONNX Runtime 运行库。
-
-Run the included parity test from the repository root:
-在仓库根目录运行下面的跨语言一致性测试：
-
-```bash
-./model_h3_next_hour_onnx_go_deployment/run_go_test.sh
+``` bash
+python3.12 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
 ```
 
-A final `PASS` means the Go program and Python ONNX Runtime produce matching predictions within the configured tolerance. See the folder's own `README.md` for setup, inference, retraining, and new-machine reproduction steps.
-最后显示 `PASS`，表示 Go 程序与 Python ONNX Runtime 的预测结果在设定误差范围内一致。环境配置、模型推理、重新训练和新机器复现步骤请查看该文件夹内的 `README.md`。
+Create a separate Python 3.11 environment for Notebook 05: 为 Notebook 05 创建独立的 Python 3.11 环境：
 
-### Two-stage recorded-tip model / 两阶段记录小费模型
-
-`model_two_stage_tip_onnx_go_deployment/`
-
-This folder deploys the two-stage recorded-tip model used in the tip prediction experiment. The first ONNX model estimates whether a positive tip is recorded, and the second ONNX model estimates the amount when a positive tip is recorded. The Go program combines them as `tip probability × positive-tip amount` to produce the expected recorded tip. The package includes both ONNX files, a fixed 17-feature schema, Python and Go validation code, example inputs, model metrics, and bilingual documentation.
-这个文件夹部署小费预测实验中的两阶段记录小费模型。第一个 ONNX 模型判断是否记录正小费，第二个 ONNX 模型预测记录正小费时的金额。Go 程序使用“记录小费概率 × 正小费金额”计算记录小费期望值。部署包包含两个 ONNX 文件、固定的 17 个特征结构、Python 与 Go 验证代码、示例输入、模型指标和中英双语文档。
-
-Run its parity test from the repository root:
-在仓库根目录运行它的跨语言一致性测试：
-
-```bash
-./model_two_stage_tip_onnx_go_deployment/run_go_test.sh
+``` bash
+python3.11 -m venv .venv-chronos
+source .venv-chronos/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements-chronos.txt
 ```
 
-A final `PASS` confirms that both ONNX stages produce matching results in Python and Go. The model improves expected-tip MAE over a simple training-mean baseline, but it remains a baseline because tipping behavior also depends on information that is not available in the trip table.
-最后显示 `PASS`，说明两个 ONNX 阶段在 Python 和 Go 中得到一致结果。该模型的期望小费 MAE 优于简单训练期平均值基线，但由于小费行为还受到行程表中没有的信息影响，因此它仍然是一个基线模型。
+### Shared configuration / 统一配置
 
-## Configuration / 配置
-
-```bash
+``` bash
 export CHICAGO_TNP_PROJECT_DIR="/path/to/chicago_tnp_full"
+export CHICAGO_TNP_RAW_DIR="/path/to/chicago_tnp_full/raw/full"
+export CHICAGO_TNP_REPO_DIR="/path/to/ericsoc"
 export MATRIXONE_HOST="127.0.0.1"
 export MATRIXONE_PORT="6001"
 export MATRIXONE_USER="root"
@@ -96,8 +73,31 @@ export MATRIXONE_DATABASE="chicago_tnp"
 export MATRIXONE_PASSWORD="your-password"
 ```
 
-OpenAI API keys are requested interactively in the notebooks that use an LLM. They are not stored in source or output files.
-使用大模型的 Notebook 会在运行时交互式读取 OpenAI API key，不会将其写入源码或输出文件。
+Notebook 03 and Notebook 04 call the OpenAI API. They ask for `OPENAI_API_KEY` at runtime and do not store the key in the Notebook or output files. Review the configured sample size and model before running these paid tests. Notebook 03 和 Notebook 04 会调用 OpenAI API。它们在运行时读取 `OPENAI_API_KEY`，不会将 key 保存到 Notebook 或输出文件。运行付费测试前请先检查样本数量和模型配置。
 
-Python functions use standard English `snake_case` identifiers for compatibility. Every function includes an English/Chinese docstring.
-Python 函数使用兼容工具链的英文 `snake_case` 标识符，每个函数均提供中英双语 docstring。
+## Reproduction paths / 复现方式
+
+**Full analytical rebuild / 完整分析重建** Start MatrixOne, prepare the two source CSV files, set the environment variables, and run Notebooks 01-08 in order. Large intermediate results are cached under `CHICAGO_TNP_PROJECT_DIR`. 启动 MatrixOne，准备两个源 CSV，设置环境变量，然后按顺序运行 Notebook 01-08。大型中间结果会缓存到 `CHICAGO_TNP_PROJECT_DIR`。
+
+**Model inference only / 只运行模型推理** MatrixOne and the raw CSV files are not required. Each model folder includes ONNX files, a feature contract, prepared JSON examples, a Go runner, and a local parity test. Read the model folder's `README.md` before supplying new inputs. 不需要 MatrixOne 和原始 CSV。每个模型文件夹都包含 ONNX 文件、特征约定、已准备的 JSON 示例、Go 推理程序和本地一致性测试。使用新输入前请先阅读模型文件夹中的 `README.md`。
+
+## Repository validation / 仓库自检
+
+Run the source-level repository check before publishing: 发布前运行源码级仓库检查：
+
+``` bash
+python tools/validate_repository.py
+```
+
+Run both Go parity tests: 运行两个 Go 一致性测试：
+
+``` bash
+./model_h3_next_hour_onnx_go_deployment/run_go_test.sh
+./model_two_stage_tip_onnx_go_deployment/run_go_test.sh
+```
+
+The repository check validates Notebook JSON, Python syntax, empty committed outputs, portable paths, model manifests, schemas, and required deliverables. It does not replace a full MatrixOne rerun because the full source tables are not stored in Git. 仓库自检会验证 Notebook JSON、Python 语法、Git 中是否清空运行输出、路径可移植性、模型清单、schema 和必要交付物。由于 Git 中不保存全量源表，它不能替代完整的 MatrixOne 重跑。
+
+## Output and data policy / 输出与数据规则
+
+Notebook outputs are intentionally empty in Git so the repository does not contain machine-specific logs, database credentials, or large generated files. Runtime outputs and caches are written under `CHICAGO_TNP_PROJECT_DIR`. Raw CSV files, MatrixOne data directories, API keys, and local environment files must not be committed. Git 中有意清空 Notebook 运行输出，避免提交机器相关日志、数据库密码或大型生成文件。运行产物和缓存写入 `CHICAGO_TNP_PROJECT_DIR`。原始 CSV、MatrixOne 数据目录、API key 和本地环境文件不得提交。

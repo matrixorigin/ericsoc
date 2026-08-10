@@ -1,4 +1,4 @@
-module github.com/matrixorigin/ericsoc/deployment/model_two_stage_tip_onnx_go_deployment
+module github.com/matrixorigin/ericsoc/model_two_stage_tip_onnx_go_deployment
 
 go 1.24
 
