@@ -1,0 +1,21 @@
+{
+  "benchmark_version": "baseline-15-v1",
+  "query_count": 15,
+  "queries": [
+    {"id": "query01", "title": "Trace status totals", "category": "basic", "difficulty": "easy", "question": "How many Astra notebook task attempts are in the imported scope, and how many ended in success or error?"},
+    {"id": "query02", "title": "Failed attempt details", "category": "error-analysis", "difficulty": "easy", "question": "Which imported task attempts failed? Return their trace ID, session ID, turn number, duration, error type, and tool count."},
+    {"id": "query03", "title": "Latest attempt per session", "category": "session-analysis", "difficulty": "medium", "question": "What is the latest recorded task attempt in each imported Astra session?"},
+    {"id": "query04", "title": "Longest task attempt", "category": "performance", "difficulty": "easy", "question": "Which task attempt took the longest, and what were its status, duration, tool count, and model-round count?"},
+    {"id": "query05", "title": "Tool usage summary", "category": "tool-analysis", "difficulty": "medium", "question": "Across all imported traces, how many successful and failed calls were recorded for each tool name?"},
+    {"id": "query06", "title": "Failed tool calls", "category": "error-analysis", "difficulty": "medium", "question": "Which individual tool calls failed? Return the trace ID, tool name, tool index, and recorded duration."},
+    {"id": "query07", "title": "Token usage by trace", "category": "performance", "difficulty": "medium", "question": "Report the recorded input, output, and cache-read tokens for each trace. Which trace has the largest input-plus-output total?"},
+    {"id": "query08", "title": "Generation count and P95 latency", "category": "performance", "difficulty": "hard", "question": "For each trace, how many LLM generations were recorded and what is their nearest-rank P95 duration in milliseconds?"},
+    {"id": "query09", "title": "Slowest tool calls", "category": "performance", "difficulty": "medium", "question": "What are the five slowest recorded tool calls across the imported traces?"},
+    {"id": "query10", "title": "Success versus error comparison", "category": "comparison", "difficulty": "hard", "question": "Compare successful and failed task attempts using average duration, tool count, input tokens, and output tokens. Do not claim statistical significance."},
+    {"id": "query11", "title": "Later success after failure", "category": "recovery-analysis", "difficulty": "hard", "question": "For each failed trace, was there a strictly later successful trace in the same session? If so, return the earliest one and the time gap."},
+    {"id": "query12", "title": "Session execution timeline", "category": "session-analysis", "difficulty": "medium", "question": "Build the ordered execution timeline for each session, including turn number, status, start time, duration, and trace ID."},
+    {"id": "query13", "title": "Final output availability", "category": "output-analysis", "difficulty": "easy", "question": "Which traces contain a nonblank final output? Report Unicode character length and summarize available versus missing outputs."},
+    {"id": "query14", "title": "Notebook versions referenced", "category": "artifact-analysis", "difficulty": "hard", "question": "Which hourly_h3_analysis notebook versions are mentioned in each trace's input, output, or tool previews?"},
+    {"id": "query15", "title": "Canonical data quality audit", "category": "data-quality", "difficulty": "hard", "question": "Audit the imported trace structure: counts, missing model/output/usage fields, root-span counts, parent links, and timestamp ordering."}
+  ]
+}
