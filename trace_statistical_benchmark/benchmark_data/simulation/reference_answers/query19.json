@@ -1,0 +1,28 @@
+{
+  "common_task_count": 4430,
+  "frontier": [
+    "model-20ad55a40357ef21ba65",
+    "model-f74f13a218595a3c449e"
+  ],
+  "models": [
+    {
+      "accuracy": 0.704063,
+      "complete_for_pareto": true,
+      "matched_tasks": 4430,
+      "median_cost": 0.005199,
+      "median_latency_ms": 16106.0,
+      "model_id": "model-20ad55a40357ef21ba65",
+      "pareto_efficient": true
+    },
+    {
+      "accuracy": 0.634763,
+      "complete_for_pareto": true,
+      "matched_tasks": 4430,
+      "median_cost": 0.004209,
+      "median_latency_ms": 19809.0,
+      "model_id": "model-f74f13a218595a3c449e",
+      "pareto_efficient": true
+    }
+  ],
+  "warning": null
+}

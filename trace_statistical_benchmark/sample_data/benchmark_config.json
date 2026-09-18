@@ -1,0 +1,7 @@
+{
+  "bootstrap_seed": 20260914,
+  "bootstrap_repetitions": 1000,
+  "permutation_repetitions": 1000,
+  "minimum_change_point_window": 5,
+  "annotation_label_field": "answer_correct"
+}

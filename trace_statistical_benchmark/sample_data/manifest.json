@@ -1,0 +1,55 @@
+{
+  "mapping_notes": [
+    "The baseline has no stable task identity, so each imported trace receives an unresolved task row.",
+    "A later source adapter should map repeated model attempts to a shared task_id before model comparison."
+  ],
+  "schema_version": "2.0.0",
+  "source_contract": "baseline-v1",
+  "tables": {
+    "annotations": {
+      "file": "annotations.jsonl",
+      "rows": 6,
+      "sha256": "dc4d565ceaf1d4e3de8d0317459bdb507492f83dbbe6f2915f553600d93f97f5"
+    },
+    "generations": {
+      "file": "generations.jsonl",
+      "rows": 3,
+      "sha256": "b615ef8cb84cb4bffd361e83aa7624298254913a6bf873781e2b8a9c76e3f0ab"
+    },
+    "model_answers": {
+      "file": "model_answers.jsonl",
+      "rows": 1,
+      "sha256": "07e45720724916e3e5574a3dc7206f301052b66fe49a756e6fbf6b7e2f767f25"
+    },
+    "models": {
+      "file": "models.jsonl",
+      "rows": 1,
+      "sha256": "c9a1c2f5f38be711f45e16716a3cbc8b5ac143640f0e7d0a7bad9a295bcfa897"
+    },
+    "observations": {
+      "file": "observations.jsonl",
+      "rows": 9,
+      "sha256": "cafd50d02c9f1e8a6a544c454d8ad9bf0033e8e06c4e9c94703d8983d2a98555"
+    },
+    "sessions": {
+      "file": "sessions.jsonl",
+      "rows": 1,
+      "sha256": "2a685bc1269779bc807c900016831cfd0e8b120940c6f155ebcb8b095d85b8ff"
+    },
+    "tasks": {
+      "file": "tasks.jsonl",
+      "rows": 2,
+      "sha256": "cf79eabc6a391c347ebf3e9802c01b95fccf3d697a0978409cf527898a3eb109"
+    },
+    "tool_calls": {
+      "file": "tool_calls.jsonl",
+      "rows": 4,
+      "sha256": "a6504315c29bb1a3bc19ebeec856457ad03f877a56bb5be9c02651588f379a65"
+    },
+    "traces": {
+      "file": "traces.jsonl",
+      "rows": 2,
+      "sha256": "fcb00317e52f909f4900651fae527aba4858ba0424282a942985425b7557b741"
+    }
+  }
+}

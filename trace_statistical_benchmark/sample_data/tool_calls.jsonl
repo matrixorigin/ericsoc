@@ -1,0 +1,4 @@
+{"duration_ms":6000.0,"error":null,"input":"sample.csv","metadata":{"tool_index":1},"observation_id":"tool-error-1","output":"Loaded sample","status":"success","tool_index":1,"tool_name":"read_file","trace_id":"trace-error"}
+{"duration_ms":48000.0,"error":null,"input":"Run analysis","metadata":{"tool_index":2},"observation_id":"tool-error-2","output":"Timeout","status":"error","tool_index":2,"tool_name":"execute","trace_id":"trace-error"}
+{"duration_ms":3000.0,"error":null,"input":"sample.csv","metadata":{"tool_index":1},"observation_id":"tool-success-1","output":"Loaded sample","status":"success","tool_index":1,"tool_name":"read_file","trace_id":"trace-success"}
+{"duration_ms":100000.0,"error":null,"input":"Run analysis","metadata":{"tool_index":2},"observation_id":"tool-success-2","output":"Saved hourly_h3_analysis_v01.ipynb","status":"success","tool_index":2,"tool_name":"execute","trace_id":"trace-success"}

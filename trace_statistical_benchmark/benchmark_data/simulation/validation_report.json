@@ -1,0 +1,71 @@
+{
+  "checks": {
+    "annotations_primary_keys_present": true,
+    "annotations_primary_keys_unique": true,
+    "answer_foreign_keys_resolve": true,
+    "attempt_numbers_are_contiguous": true,
+    "data_marked_synthetic": true,
+    "every_task_has_every_model": true,
+    "exactly_one_root_per_trace": true,
+    "generation_rows_match_observations": true,
+    "generations_primary_keys_present": true,
+    "generations_primary_keys_unique": true,
+    "has_annotation_revisions": true,
+    "has_easy_and_hard_tasks": true,
+    "has_retries": true,
+    "has_shared_annotations": true,
+    "has_success_and_error_tools": true,
+    "has_success_and_error_traces": true,
+    "model_answers_primary_keys_present": true,
+    "model_answers_primary_keys_unique": true,
+    "models_primary_keys_present": true,
+    "models_primary_keys_unique": true,
+    "observation_parent_links_resolve": true,
+    "observation_trace_links_resolve": true,
+    "observations_primary_keys_present": true,
+    "observations_primary_keys_unique": true,
+    "sessions_primary_keys_present": true,
+    "sessions_primary_keys_unique": true,
+    "tasks_primary_keys_present": true,
+    "tasks_primary_keys_unique": true,
+    "timestamps_are_ordered": true,
+    "tool_calls_primary_keys_present": true,
+    "tool_calls_primary_keys_unique": true,
+    "tool_rows_match_observations": true,
+    "trace_duration_matches_timestamps": true,
+    "trace_foreign_keys_resolve": true,
+    "trace_metadata_counts_match": true,
+    "traces_primary_keys_present": true,
+    "traces_primary_keys_unique": true
+  },
+  "details": {
+    "annotation_revisions": 650,
+    "counts": {
+      "annotations": 9510,
+      "generations": 22857,
+      "model_answers": 10000,
+      "models": 2,
+      "observations": 60099,
+      "sessions": 8860,
+      "tasks": 4430,
+      "tool_calls": 27242,
+      "traces": 10000
+    },
+    "difficulty": {
+      "easy": 1713,
+      "hard": 1213,
+      "medium": 1504
+    },
+    "sessions_with_retries": 673,
+    "tool_status": {
+      "error": 4134,
+      "success": 23108
+    },
+    "trace_status": {
+      "error": 1883,
+      "success": 8117
+    }
+  },
+  "failed_checks": [],
+  "passed": true
+}

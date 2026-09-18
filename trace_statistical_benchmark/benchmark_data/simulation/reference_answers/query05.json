@@ -1,0 +1,35 @@
+{
+  "rows": [
+    {
+      "error": 860,
+      "success": 4616,
+      "tool_name": "python",
+      "total": 5476
+    },
+    {
+      "error": 824,
+      "success": 4649,
+      "tool_name": "read_file",
+      "total": 5473
+    },
+    {
+      "error": 833,
+      "success": 4612,
+      "tool_name": "search",
+      "total": 5445
+    },
+    {
+      "error": 792,
+      "success": 4675,
+      "tool_name": "shell",
+      "total": 5467
+    },
+    {
+      "error": 825,
+      "success": 4556,
+      "tool_name": "write_file",
+      "total": 5381
+    }
+  ],
+  "tool_call_count": 27242
+}

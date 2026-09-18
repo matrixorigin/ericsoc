@@ -1,0 +1,40 @@
+{
+  "requested_count": 5,
+  "rows": [
+    {
+      "duration_ms": 24048,
+      "observation_id": "obs-tool-314c8f1ab6678dd1f80a",
+      "status": "success",
+      "tool_name": "write_file",
+      "trace_id": "trace-3c7218f6eb7bc97fe4ba"
+    },
+    {
+      "duration_ms": 21671,
+      "observation_id": "obs-tool-5162613086e3217202c0",
+      "status": "success",
+      "tool_name": "shell",
+      "trace_id": "trace-5bb76aa99e001f08bf00"
+    },
+    {
+      "duration_ms": 18531,
+      "observation_id": "obs-tool-d87262a8c17ece286d9d",
+      "status": "success",
+      "tool_name": "shell",
+      "trace_id": "trace-4465f267fe0c132a8835"
+    },
+    {
+      "duration_ms": 18113,
+      "observation_id": "obs-tool-8886ea95cc214547f947",
+      "status": "success",
+      "tool_name": "shell",
+      "trace_id": "trace-6dc38a2239a77ca230c5"
+    },
+    {
+      "duration_ms": 18091,
+      "observation_id": "obs-tool-9d661111535b76b60b30",
+      "status": "success",
+      "tool_name": "read_file",
+      "trace_id": "trace-b24a9e26835863122289"
+    }
+  ]
+}

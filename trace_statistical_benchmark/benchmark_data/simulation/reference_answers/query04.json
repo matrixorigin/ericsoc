@@ -1,0 +1,12 @@
+{
+  "longest_duration_ms": 169704,
+  "rows": [
+    {
+      "duration_ms": 169704,
+      "llm_rounds": 4,
+      "status": "error",
+      "tool_count": 7,
+      "trace_id": "trace-7a62a5b6da2a24d61073"
+    }
+  ]
+}

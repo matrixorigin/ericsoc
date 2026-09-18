@@ -1,0 +1,32 @@
+{
+  "checksums_sha256": {
+    "annotations.jsonl": "e3759af93c7ffa863f03d45b2c4a65008bc5d8286fd57e48312718544afef182",
+    "benchmark_config.json": "9ef06337874ec1dd88f3fd726896c64d37de0070fd0177f8542b996f5b61ea37",
+    "generations.jsonl": "3d5ecb65c1fdc00d38a37cce95e2f7910d152353a5c3785fdc355983de79d84f",
+    "model_answers.jsonl": "6acfcf186cfe78a0218569bbe83d221904337aaaabc8689826bf33fe348063fd",
+    "models.jsonl": "29580c494f9c87b756f689f384247e3834f6653140159bb3be78c35aa57439e5",
+    "observations.jsonl": "479c8524ec71ab2e4855eff8037f400fe809cfcec75ed421261c21cd2d817a66",
+    "private_ground_truth.json": "06c406e1a8105c2df2c4a79a474952685ffffc30d2439e0122b4d25dc6dec6bd",
+    "sessions.jsonl": "69f4e30023605e249c552b5ffc3805c4f825dbb6c15a93afe1746c8ee0977960",
+    "tasks.jsonl": "00f231d7568aa74a50b35f0889165e541577f50c0c0d9ace5d3284a236b76ec9",
+    "tool_calls.jsonl": "864ff5129d2dcbb5366af99c4ed74d2515b3dedc66fbb1035807f29b62feafe4",
+    "traces.jsonl": "17218a0cfa98512079ddf71d3fb3fd41df5a88d8d22005945bfd930cc8549088"
+  },
+  "contains_real_model_measurements": false,
+  "contains_real_user_data": false,
+  "counts": {
+    "annotations": 9510,
+    "generations": 22857,
+    "model_answers": 10000,
+    "models": 2,
+    "observations": 60099,
+    "sessions": 8860,
+    "tasks": 4430,
+    "tool_calls": 27242,
+    "traces": 10000
+  },
+  "dataset_version": "synthetic-agent-traces-v1-seed-20260915",
+  "generator_version": "synthetic-trace-generator-v1",
+  "schema_version": "2.0.0",
+  "seed": 20260915
+}

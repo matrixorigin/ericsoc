@@ -1,0 +1,24 @@
+{
+  "smoke": {
+    "task_count": 24,
+    "model_count": 2,
+    "seed": 20260915,
+    "bootstrap_repetitions": 100,
+    "permutation_repetitions": 100
+  },
+  "pilot": {
+    "task_count": 500,
+    "model_count": 2,
+    "seed": 20260915,
+    "bootstrap_repetitions": 300,
+    "permutation_repetitions": 300
+  },
+  "simulation": {
+    "task_count": 4430,
+    "model_count": 2,
+    "target_trace_count": 10000,
+    "seed": 20260915,
+    "bootstrap_repetitions": 300,
+    "permutation_repetitions": 300
+  }
+}

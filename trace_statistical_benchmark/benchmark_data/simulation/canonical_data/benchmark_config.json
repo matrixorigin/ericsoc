@@ -1,0 +1,11 @@
+{
+  "selected_models": [
+    "model-f74f13a218595a3c449e",
+    "model-20ad55a40357ef21ba65"
+  ],
+  "bootstrap_seed": 20260915,
+  "bootstrap_repetitions": 300,
+  "permutation_repetitions": 300,
+  "minimum_change_point_window": 50,
+  "annotation_label_field": "answer_correct"
+}

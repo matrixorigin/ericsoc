@@ -1,0 +1,21 @@
+{
+  "interpretation_limit": "Descriptive comparison only; this small non-random sample does not support a significance claim.",
+  "rows": [
+    {
+      "mean_duration_ms": 38348.529,
+      "mean_input_tokens": 2386.804,
+      "mean_output_tokens": 324.393,
+      "mean_tool_count": 3.76,
+      "status": "error",
+      "trace_count": 1883
+    },
+    {
+      "mean_duration_ms": 21550.61,
+      "mean_input_tokens": 1897.966,
+      "mean_output_tokens": 279.032,
+      "mean_tool_count": 2.484,
+      "status": "success",
+      "trace_count": 8117
+    }
+  ]
+}

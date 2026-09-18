@@ -9,7 +9,7 @@ The public data covers 2022-2024 and contains 243,479,296 completed trips after 
 ## Key validated results / 已验证的关键结果
 
 | Area / 方向                             | Recorded result / 已记录结果                                                                                                                                                                        |
-|------------------------------------|------------------------------------|
+|-----------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Full data foundation / 全量数据基础     | 243,479,296 clean and H3-enriched trip rows. / 243,479,296 条清洗并加入 H3 的行程。                                                                                                                 |
 | Next-hour H3 demand / 下一小时 H3 客流  | MAE 12.66 pickups and R-squared 0.9412 on 2024. / 2024 测试集 MAE 12.66、R² 0.9412。                                                                                                                |
 | Recorded-tip model / 记录小费模型       | Expected-tip MAE improved from about \$1.58 to \$1.46 in the portable model package. / 可移植模型将期望小费 MAE 从约 1.58 美元降至 1.46 美元。                                                      |
@@ -17,6 +17,7 @@ The public data covers 2022-2024 and contains 243,479,296 completed trips after 
 | Blind event screening / 赛事盲测筛选    | Top 8 found 5 of 8 games; Top 20 found all 8 games. / Top 8 找到 8 场中的 5 场，Top 20 找到全部 8 场。                                                                                              |
 | Event demand generator / 赛事需求生成器 | Validation on eight unseen 2024 games: pickup WAPE 19.15%, dropoff WAPE 22.78%. / 在 8 场未参与训练的 2024 比赛上，pickup WAPE 19.15%，dropoff WAPE 22.78%。                                        |
 | Go deployment / Go 部署                 | Python and Go ONNX predictions match within 0.001 on fixed parity cases. / 固定测试样本中，Python 与 Go ONNX 预测差异小于 0.001。                                                                   |
+| Trace benchmark / Trace 分析基准        | 30 deterministic statistical queries across six capability families, with controlled simulation and optional Langfuse integration. / 六类能力、30 个确定性统计查询，并包含可控模拟与可选 Langfuse 集成。 |
 
 These results are planning and research results. Completed trips are not the same as all ride requests, and simulator profit is contribution profit under stated assumptions rather than audited company net profit. 这些结果用于规划和研究。已完成行程不等同于全部叫车请求；模拟器利润是基于明确假设计算的贡献利润，不是企业审计后的净利润。
 
@@ -32,6 +33,12 @@ Run the numbered notebooks in order when rebuilding the full workflow. Notebooks
 6.  [`06_h3_next_hour_onnx_go_deployment_validation.ipynb`](06_h3_next_hour_onnx_go_deployment_validation.ipynb) Inspects the deployable ONNX package and verifies Python/Go prediction parity. / 检查可部署 ONNX 模型包并验证 Python 与 Go 的预测一致性。
 7.  [`07_bears_event_sensitivity_and_2024_blind_detection.ipynb`](07_bears_event_sensitivity_and_2024_blind_detection.ipynb) Learns Bears home-game pickup/dropoff curves, predicts known 2024 games, and performs a schedule-free blind screen. / 学习 Bears 主场比赛上下车曲线，预测已知的 2024 比赛，并进行不提供赛程的盲测筛选。
 8.  [`08_event_business_monte_carlo_simulator.ipynb`](08_event_business_monte_carlo_simulator.ipynb) Validates an event-demand generator and compares four fleet sizes with three pricing strategies over 20,000 two-day scenarios. / 验证赛事需求生成器，并在 2 万个连续两天场景中比较四种车队规模和三种定价策略。
+
+### LLM Agent trace benchmark / LLM Agent Trace 分析基准
+
+[`trace_statistical_benchmark/`](trace_statistical_benchmark/) is an independent, reusable benchmark for statistical analysis of LLM-agent traces. It provides a canonical trace and annotation schema, 30 executable Python reference queries, source-log adapters, regression tests, an optional Langfuse workflow, and a bundled seeded simulation corpus containing exactly 10,000 traces. The synthetic corpus uses the labels Astra (Matrix Origin's Astra agent system) and Codex (OpenAI Codex); it is controlled test data, not real product performance evidence. Private logs, credentials, and personal annotation exports are excluded.
+
+[`trace_statistical_benchmark/`](trace_statistical_benchmark/) 是一套独立、可复用的 LLM Agent Trace 统计分析基准，包含统一 Trace 与标注结构、30 个可执行 Python 标准查询、日志适配器、回归测试、可选的 Langfuse 流程，以及包含准确 10,000 条 Trace 的固定种子模拟测试数据。模拟数据使用 Astra（Matrix Origin 的 Astra Agent 系统）和 Codex（OpenAI Codex）两个标签；它是受控测试数据，不代表真实产品性能。目录不包含私人日志、密钥或个人标注导出。
 
 ## Environment / 环境
 

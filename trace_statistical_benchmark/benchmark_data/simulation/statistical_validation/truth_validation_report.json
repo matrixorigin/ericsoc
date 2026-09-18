@@ -1,0 +1,554 @@
+{
+  "validation_version": "simulation-truth-validation-v1",
+  "dataset_version": "synthetic-agent-traces-v1-seed-20260915",
+  "dataset_seed": 20260915,
+  "query_count": 30,
+  "passed_count": 30,
+  "failed_count": 0,
+  "failed_queries": [],
+  "all_passed": true,
+  "family_summary": {
+    "annotation": {
+      "total": 5,
+      "passed": 5
+    },
+    "comparison": {
+      "total": 5,
+      "passed": 5
+    },
+    "descriptive": {
+      "total": 5,
+      "passed": 5
+    },
+    "inference": {
+      "total": 5,
+      "passed": 5
+    },
+    "relational": {
+      "total": 5,
+      "passed": 5
+    },
+    "workflow": {
+      "total": 5,
+      "passed": 5
+    }
+  },
+  "validation_kind_summary": {
+    "exact": {
+      "total": 15,
+      "passed": 15
+    },
+    "known-effect": {
+      "total": 5,
+      "passed": 5
+    },
+    "known-null": {
+      "total": 4,
+      "passed": 4
+    },
+    "location-tolerance": {
+      "total": 1,
+      "passed": 1
+    },
+    "range": {
+      "total": 2,
+      "passed": 2
+    },
+    "structural": {
+      "total": 3,
+      "passed": 3
+    }
+  },
+  "results": [
+    {
+      "query_id": "query01",
+      "family": "descriptive",
+      "validation_kind": "exact",
+      "rule": "Trace status totals equal the frozen corpus and the declared simulation size.",
+      "expected": {
+        "total_traces": 10000,
+        "success": 8117,
+        "error": 1883,
+        "other": 0,
+        "declared_total": 10000
+      },
+      "observed": {
+        "error": 1883,
+        "other": 0,
+        "success": 8117,
+        "total_traces": 10000
+      },
+      "passed": true
+    },
+    {
+      "query_id": "query02",
+      "family": "workflow",
+      "validation_kind": "exact",
+      "rule": "Every failed trace appears once.",
+      "expected": 1883,
+      "observed": 1883,
+      "passed": true
+    },
+    {
+      "query_id": "query03",
+      "family": "relational",
+      "validation_kind": "exact",
+      "rule": "One correct latest trace is returned per session.",
+      "expected": 8860,
+      "observed": 8860,
+      "passed": true
+    },
+    {
+      "query_id": "query04",
+      "family": "descriptive",
+      "validation_kind": "exact",
+      "rule": "Maximum duration and all ties are correct.",
+      "expected": {
+        "duration_ms": 169704,
+        "trace_ids": [
+          "trace-7a62a5b6da2a24d61073"
+        ]
+      },
+      "observed": {
+        "duration_ms": 169704,
+        "trace_ids": [
+          "trace-7a62a5b6da2a24d61073"
+        ]
+      },
+      "passed": true
+    },
+    {
+      "query_id": "query05",
+      "family": "workflow",
+      "validation_kind": "exact",
+      "rule": "Tool totals match tool-call rows.",
+      "expected": 27242,
+      "observed": 27242,
+      "passed": true
+    },
+    {
+      "query_id": "query06",
+      "family": "workflow",
+      "validation_kind": "exact",
+      "rule": "All failed tool calls are returned.",
+      "expected": 4134,
+      "observed": 4134,
+      "passed": true
+    },
+    {
+      "query_id": "query07",
+      "family": "descriptive",
+      "validation_kind": "exact",
+      "rule": "Largest input-plus-output token total is correct.",
+      "expected": {
+        "value": 8946,
+        "trace_ids": [
+          "trace-555c7ca87bb3287c9155"
+        ]
+      },
+      "observed": {
+        "value": 8946,
+        "trace_ids": [
+          "trace-555c7ca87bb3287c9155"
+        ]
+      },
+      "passed": true
+    },
+    {
+      "query_id": "query08",
+      "family": "descriptive",
+      "validation_kind": "exact",
+      "rule": "Generation counts cover every trace.",
+      "expected": 22857,
+      "observed": 22857,
+      "passed": true
+    },
+    {
+      "query_id": "query09",
+      "family": "workflow",
+      "validation_kind": "exact",
+      "rule": "Top five tool calls use deterministic ordering.",
+      "expected": [
+        "obs-tool-314c8f1ab6678dd1f80a",
+        "obs-tool-5162613086e3217202c0",
+        "obs-tool-d87262a8c17ece286d9d",
+        "obs-tool-8886ea95cc214547f947",
+        "obs-tool-9d661111535b76b60b30"
+      ],
+      "observed": [
+        "obs-tool-314c8f1ab6678dd1f80a",
+        "obs-tool-5162613086e3217202c0",
+        "obs-tool-d87262a8c17ece286d9d",
+        "obs-tool-8886ea95cc214547f947",
+        "obs-tool-9d661111535b76b60b30"
+      ],
+      "passed": true
+    },
+    {
+      "query_id": "query10",
+      "family": "comparison",
+      "validation_kind": "exact",
+      "rule": "Status profiles match direct group summaries.",
+      "expected": [
+        {
+          "status": "error",
+          "trace_count": 1883,
+          "mean_duration_ms": 38348.529,
+          "mean_tool_count": 3.76,
+          "mean_input_tokens": 2386.804,
+          "mean_output_tokens": 324.393
+        },
+        {
+          "status": "success",
+          "trace_count": 8117,
+          "mean_duration_ms": 21550.61,
+          "mean_tool_count": 2.484,
+          "mean_input_tokens": 1897.966,
+          "mean_output_tokens": 279.032
+        }
+      ],
+      "observed": [
+        {
+          "mean_duration_ms": 38348.529,
+          "mean_input_tokens": 2386.804,
+          "mean_output_tokens": 324.393,
+          "mean_tool_count": 3.76,
+          "status": "error",
+          "trace_count": 1883
+        },
+        {
+          "mean_duration_ms": 21550.61,
+          "mean_input_tokens": 1897.966,
+          "mean_output_tokens": 279.032,
+          "mean_tool_count": 2.484,
+          "status": "success",
+          "trace_count": 8117
+        }
+      ],
+      "passed": true
+    },
+    {
+      "query_id": "query11",
+      "family": "workflow",
+      "validation_kind": "exact",
+      "rule": "Recovery count matches direct session-time search.",
+      "expected": 1053,
+      "observed": 1053,
+      "passed": true
+    },
+    {
+      "query_id": "query12",
+      "family": "relational",
+      "validation_kind": "exact",
+      "rule": "Every trace appears once in the session timelines.",
+      "expected": {
+        "sessions": 8860,
+        "traces": 10000
+      },
+      "observed": {
+        "sessions": 8860,
+        "traces": 10000
+      },
+      "passed": true
+    },
+    {
+      "query_id": "query13",
+      "family": "descriptive",
+      "validation_kind": "exact",
+      "rule": "Output availability matches the trace table.",
+      "expected": {
+        "available": 8437,
+        "missing": 1563
+      },
+      "observed": {
+        "available": 8437,
+        "missing": 1563
+      },
+      "passed": true
+    },
+    {
+      "query_id": "query14",
+      "family": "relational",
+      "validation_kind": "exact",
+      "rule": "All generated notebook versions are recovered.",
+      "expected": [
+        "hourly_h3_analysis_v00.ipynb",
+        "hourly_h3_analysis_v01.ipynb",
+        "hourly_h3_analysis_v02.ipynb",
+        "hourly_h3_analysis_v03.ipynb",
+        "hourly_h3_analysis_v04.ipynb"
+      ],
+      "observed": [
+        "hourly_h3_analysis_v00.ipynb",
+        "hourly_h3_analysis_v01.ipynb",
+        "hourly_h3_analysis_v02.ipynb",
+        "hourly_h3_analysis_v03.ipynb",
+        "hourly_h3_analysis_v04.ipynb"
+      ],
+      "passed": true
+    },
+    {
+      "query_id": "query15",
+      "family": "relational",
+      "validation_kind": "structural",
+      "rule": "No broken links, roots, model fields, usage fields, or timestamps.",
+      "expected": "all structural issue lists empty",
+      "observed": {
+        "traces_missing_model": 0,
+        "traces_missing_usage": 0,
+        "traces_without_exactly_one_root": 0,
+        "broken_trace_links": 0,
+        "broken_parent_links": 0,
+        "invalid_timestamp_rows": 0
+      },
+      "passed": true
+    },
+    {
+      "query_id": "query16",
+      "family": "relational",
+      "validation_kind": "structural",
+      "rule": "Every model answer has complete, unambiguous lineage.",
+      "expected": {
+        "answers": 10000,
+        "issues": {}
+      },
+      "observed": {
+        "answers": 10000,
+        "issues": {}
+      },
+      "passed": true
+    },
+    {
+      "query_id": "query17",
+      "family": "comparison",
+      "validation_kind": "known-effect",
+      "rule": "Recover the selected models' paired accuracy difference.",
+      "expected": {
+        "accuracy_a": 0.634763,
+        "accuracy_b": 0.704063,
+        "gap": -0.06930000000000003,
+        "p<": 0.05
+      },
+      "observed": {
+        "accuracy_a": 0.634763,
+        "accuracy_b": 0.704063,
+        "gap": -0.06930000000000003,
+        "p": 0.0
+      },
+      "passed": true
+    },
+    {
+      "query_id": "query18",
+      "family": "comparison",
+      "validation_kind": "known-effect",
+      "rule": "The slower selected model has a positive paired latency gap with an interval above zero.",
+      "expected": "median gap > 0 and CI lower > 0",
+      "observed": {
+        "matched": 3764,
+        "median_gap_ms": 2366.0,
+        "ci": [
+          2113.95,
+          2668.8
+        ]
+      },
+      "passed": true
+    },
+    {
+      "query_id": "query19",
+      "family": "comparison",
+      "validation_kind": "known-null",
+      "rule": "Configured quality, latency, and cost tradeoffs keep both systems on the Pareto frontier.",
+      "expected": [
+        "model-20ad55a40357ef21ba65",
+        "model-f74f13a218595a3c449e"
+      ],
+      "observed": [
+        "model-20ad55a40357ef21ba65",
+        "model-f74f13a218595a3c449e"
+      ],
+      "passed": true
+    },
+    {
+      "query_id": "query20",
+      "family": "comparison",
+      "validation_kind": "known-null",
+      "rule": "No model-specific difficulty interaction was programmed.",
+      "expected": "absolute interaction <= 0.1 and CI contains 0",
+      "observed": {
+        "interaction": -0.036946,
+        "ci": [
+          -0.074623,
+          0.002498
+        ]
+      },
+      "passed": true
+    },
+    {
+      "query_id": "query21",
+      "family": "inference",
+      "validation_kind": "known-effect",
+      "rule": "Higher generated complexity is negatively associated with correctness.",
+      "expected": "rho < 0 and permutation p < 0.05",
+      "observed": {
+        "n": 8860,
+        "rho": -0.38205,
+        "p": 0.003322
+      },
+      "passed": true
+    },
+    {
+      "query_id": "query22",
+      "family": "inference",
+      "validation_kind": "known-effect",
+      "rule": "Tool failure is associated with final trace failure but is not deterministic.",
+      "expected": "all cells > 0, risk ratio > 5.0, CI lower > 1",
+      "observed": {
+        "table": {
+          "no_tool_failure_and_task_failure": 52,
+          "no_tool_failure_and_task_success": 7547,
+          "tool_failure_and_task_failure": 1831,
+          "tool_failure_and_task_success": 570
+        },
+        "risk_ratio": 111.442099,
+        "ci": [
+          84.920522,
+          146.246647
+        ],
+        "p": 0.0
+      },
+      "passed": true
+    },
+    {
+      "query_id": "query23",
+      "family": "inference",
+      "validation_kind": "known-effect",
+      "rule": "Recovery rises across the generated retry-count levels.",
+      "expected": "at least 3 levels, nondecreasing rates, positive z, p < 0.05",
+      "observed": {
+        "retry_levels": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "rates": [
+          0,
+          0.813084,
+          0.949367,
+          0.991304
+        ],
+        "z": 29.916086,
+        "p": 0.0
+      },
+      "passed": true
+    },
+    {
+      "query_id": "query24",
+      "family": "inference",
+      "validation_kind": "known-null",
+      "rule": "Failures were spread approximately uniformly across five tools.",
+      "expected": {
+        "hhi": 0.2,
+        "tolerance": 0.01,
+        "gini<": 0.05
+      },
+      "observed": {
+        "hhi": 0.200138,
+        "gini": 0.01403,
+        "failed_tools": 4134
+      },
+      "passed": true
+    },
+    {
+      "query_id": "query25",
+      "family": "inference",
+      "validation_kind": "location-tolerance",
+      "rule": "Detect the programmed latency drift within the allowed trace-position tolerance.",
+      "expected": {
+        "true_index": 6705,
+        "max_error_fraction": 0.1
+      },
+      "observed": {
+        "selected_index": 6509,
+        "error_fraction": 0.0196,
+        "metric": "mean_latency_ms"
+      },
+      "passed": true
+    },
+    {
+      "query_id": "query26",
+      "family": "annotation",
+      "validation_kind": "structural",
+      "rule": "All generated annotation events satisfy the canonical contract.",
+      "expected": {
+        "annotations": 9510,
+        "invalid": 0
+      },
+      "observed": {
+        "annotations": 9510,
+        "invalid": 0
+      },
+      "passed": true
+    },
+    {
+      "query_id": "query27",
+      "family": "annotation",
+      "validation_kind": "exact",
+      "rule": "One effective label remains per task and simulated reviewer.",
+      "expected": 8860,
+      "observed": 8860,
+      "passed": true
+    },
+    {
+      "query_id": "query28",
+      "family": "annotation",
+      "validation_kind": "range",
+      "rule": "Simulated reviewer agreement is neither random nor perfect.",
+      "expected": {
+        "shared": 4430,
+        "raw_agreement_range": [
+          0.65,
+          0.8
+        ],
+        "kappa_range": [
+          0.2,
+          0.6
+        ]
+      },
+      "observed": {
+        "shared": 4430,
+        "raw_agreement": 0.710384,
+        "kappa": 0.402299
+      },
+      "passed": true
+    },
+    {
+      "query_id": "query29",
+      "family": "annotation",
+      "validation_kind": "known-null",
+      "rule": "No strong reviewer positive-rate bias should be detected.",
+      "expected": "absolute paired difference < 0.05 and adjusted p >= 0.05",
+      "observed": {
+        "difference": 0.00474,
+        "adjusted_p": 0.576614
+      },
+      "passed": true
+    },
+    {
+      "query_id": "query30",
+      "family": "annotation",
+      "validation_kind": "range",
+      "rule": "Revision rate recovers the programmed 8% process and all timing values are nonnegative.",
+      "expected": {
+        "target_rate": 0.08,
+        "tolerance": 0.02
+      },
+      "observed": {
+        "rate": 0.068349,
+        "events": 9510,
+        "revision_events": 650
+      },
+      "passed": true
+    }
+  ]
+}

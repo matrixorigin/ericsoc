@@ -1,86 +1,152 @@
-# Trace Statistical Benchmark
+# LLM Agent Trace Statistical Benchmark
 
-This folder contains the first 15 deterministic queries for evaluating statistical analysis over LLM-agent traces. The queries were developed from a small set of Astra notebook execution traces and are published here as the baseline workload for a broader trace-analysis benchmark.
+This project provides a reproducible benchmark for statistical analysis of LLM-agent traces. It includes a versioned canonical data contract, 30 natural-language analysis questions, deterministic Python reference implementations, controlled synthetic data generation, source-log adapters, and an optional Langfuse round trip.
 
-本文件夹包含首批15个可确定计算结果的查询，用于评估大模型分析 Agent Trace 的能力。这些查询最初基于一组 Astra Notebook 执行日志开发，是后续 Trace 统计分析 benchmark 的基础题组。
+本项目提供一套可复现的 LLM Agent Trace 统计分析 benchmark，包含统一数据约定、30 个自然语言查询、确定性的 Python 标准答案、可控模拟数据、日志适配器，以及可选的 Langfuse 上传与标注闭环。
 
-## What is included / 包含内容
+## What Is Included
 
-| Path / 路径 | Purpose / 用途 |
+| Path | Purpose |
 |---|---|
-| `reference_queries.py` | Complete Python reference implementations and task definitions / 完整的 Python 标准实现和题目定义 |
-| `queries/query01.py` to `query15.py` | One command-line entry point per query / 每道题一个独立运行入口 |
-| `query_catalog.json` | Machine-readable query metadata / 机器可读的查询目录 |
-| `sample_data/` | Small synthetic dataset for local checks; no real Astra logs / 用于本地检查的虚构样例，不含真实 Astra 日志 |
-| `docs/data_contract.md` | Input schema used by the query runner / 查询程序使用的数据结构 |
-| `tests/test_queries.py` | Smoke tests for all 15 queries / 15道查询的基础测试 |
+| `query_catalog.json` | Machine-readable definitions for Query 01-30 |
+| `reference_queries.py` | Reference implementations for Query 01-15 |
+| `advanced_reference_queries.py` | Reference implementations for Query 16-30 |
+| `queries/` | One command-line entry point per query |
+| `schemas/` | Canonical trace and annotation schemas |
+| `adapters/` | Astra session-log and Codex rollout adapters; no private logs are included |
+| `simulation/` | Seeded synthetic corpus generator, validator, and profile runner |
+| `benchmark_data/simulation/` | Bundled 10,000-trace simulation corpus, all 30 reference answers, and validation evidence |
+| `integrations/` | Langfuse upload, inventory verification, annotation export, and local analysis |
+| `validation/` | Benchmark-design, schema, and statistical-truth checks |
+| `sample_data/` | Small public fixture for local smoke tests |
+| `tests/` | Regression tests for queries, adapters, simulation, and Langfuse conversion |
+| `docs/` | Specification, query matrix, data contract, workflow, and maintainer handoff |
 
-## Query coverage / 查询范围
+## Verified Scope
 
-| ID | Query / 查询内容 | Level / 难度 |
-|---|---|---|
-| `query01` | Count total, successful, and failed traces / 统计 Trace 总数、成功数和失败数 | Easy |
-| `query02` | List failed attempts and their error details / 列出失败任务及错误信息 | Easy |
-| `query03` | Find the latest attempt in each session / 找出每个 Session 的最后一次任务 | Medium |
-| `query04` | Find the longest task attempt / 找出耗时最长的任务 | Easy |
-| `query05` | Summarize successful and failed calls by tool / 按工具统计成功和失败调用 | Medium |
-| `query06` | List individual failed tool calls / 列出具体失败的工具调用 | Medium |
-| `query07` | Compare token usage across traces / 比较不同 Trace 的 Token 使用量 | Medium |
-| `query08` | Calculate generation count and nearest-rank P95 latency / 计算模型调用次数和 P95 耗时 | Hard |
-| `query09` | Find the five slowest tool calls / 找出最慢的五次工具调用 | Medium |
-| `query10` | Compare successful and failed attempts descriptively / 描述性比较成功与失败任务 | Hard |
-| `query11` | Detect a later success after each failure / 检查失败后是否出现后续成功 | Hard |
-| `query12` | Rebuild the ordered timeline for every session / 重建每个 Session 的执行时间线 | Medium |
-| `query13` | Audit final-output availability and length / 检查最终输出是否存在及其长度 | Easy |
-| `query14` | Find notebook versions mentioned across trace content / 查找 Trace 中提到的 Notebook 版本 | Hard |
-| `query15` | Audit links, roots, timestamps, and missing fields / 检查关联、根步骤、时间和缺失字段 | Hard |
+The reference implementation contains six query families with five questions each:
 
-## Run a query / 运行查询
+1. Descriptive distributions
+2. Relational integrity
+3. Workflow failures and recovery
+4. Paired model comparison
+5. Statistical inference and drift
+6. Annotation provenance and agreement
 
-Python 3.10 or newer is sufficient. The reference implementation uses only the Python standard library.
+The bundled seeded simulation profile contains 4,430 shared tasks, 8,860 system sessions, exactly 10,000 traces, 60,099 observations, and 9,510 simulated annotation events. These are the test records used to run and validate all 30 queries in this repository.
 
-使用 Python 3.10 或更高版本即可，标准实现只依赖 Python 标准库。
+The two system labels are `Astra` and `Codex`. **Astra means Matrix Origin's Astra agent system; it does not refer to any OpenAI product named Astra.** `Codex` means OpenAI Codex. The records are generated by deterministic Python with controlled simulation parameters. They are test fixtures, not measurements of the real Astra or Codex products and must not be used to claim that one product performs better than the other.
 
-From this folder, run one query against the included synthetic data:
+All 30 reference queries were checked against programmed effects, known null relationships, structural rules, and fixed acceptance thresholds. The complete simulation corpus and its reference answers are included so another maintainer can reproduce the same checks without first generating data.
 
-在本文件夹中，对虚构样例运行一道查询：
+## Quick Start
+
+Python 3.11 or newer is recommended.
 
 ```bash
-python3 -m queries.query01 --data-dir sample_data
+cd trace_statistical_benchmark
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python -m unittest discover -s tests -v
 ```
 
-Run a different query by changing the module name:
-
-修改编号即可运行其他查询：
+Run one query against the public sample:
 
 ```bash
-python3 -m queries.query08 --data-dir sample_data
+python -m queries.query01 --data-dir sample_data
+python -m queries.query17 --data-dir sample_data
+python -m queries.query30 --data-dir sample_data
 ```
 
-Run the complete smoke test:
-
-运行全部基础测试：
+The full test corpus is already available under `benchmark_data/simulation/`. Validate its statistical ground truth directly:
 
 ```bash
-python3 -m unittest discover -s tests -v
+python validation/validate_statistical_truth.py
 ```
 
-## Use another trace dataset / 使用其他 Trace 数据
-
-Prepare `traces.jsonl` and `observations.jsonl` according to [`docs/data_contract.md`](docs/data_contract.md), then pass their parent folder to `--data-dir`.
-
-按照 [`docs/data_contract.md`](docs/data_contract.md) 准备 `traces.jsonl` 和 `observations.jsonl`，再通过 `--data-dir` 指定其所在文件夹。
+Generate and validate a small synthetic corpus for a quick development check:
 
 ```bash
-python3 -m queries.query15 --data-dir /path/to/canonical_trace_data
+python simulation/run_profile.py --profile smoke --replace
 ```
 
-Each command prints a deterministic JSON answer. These Python results can be stored as expected answers when the same natural-language questions are evaluated with an LLM in Langfuse.
+The output is written to `output/smoke/` and is ignored by Git.
 
-每条命令都会输出确定性的 JSON 答案。将相同的自然语言问题交给大模型和 Langfuse 运行时，可以把这些 Python 结果作为标准答案。
+To regenerate the bundled full reference workload with the same fixed seed:
 
-## Scope / 当前范围
+```bash
+python simulation/run_profile.py --profile simulation --output-root benchmark_data --replace
+python validation/validate_statistical_truth.py
+```
 
-This baseline focuses on trace status, errors, sessions, latency, tokens, tool calls, recovery, output availability, artifact references, and data quality. It is an initial workload, not a claim of full statistical coverage. Real Astra logs and platform credentials are not included.
+Regeneration replaces `benchmark_data/simulation/`. With the included profile it creates the same 10,000-trace Astra/Codex-labelled synthetic corpus and rewrites all 30 reference-answer files.
 
-本基线覆盖 Trace 状态、错误、Session、耗时、Token、工具调用、恢复、最终输出、文件版本和数据质量。它是第一组基础查询，不代表已经覆盖全部统计分析能力。仓库不包含真实 Astra 日志或平台密钥。
+## Canonical Data Model
+
+The benchmark uses nine logical tables:
+
+`models`, `tasks`, `sessions`, `traces`, `observations`, `generations`, `tool_calls`, `model_answers`, and `annotations`.
+
+The included JSONL files are a normalized representation selected for reproducible queries. This is not a Langfuse storage requirement. A source system may keep nested JSON, relational tables, or another physical format as long as an adapter preserves the same logical entities, parent-child links, timestamps, and provenance.
+
+See [`docs/data_contract.md`](docs/data_contract.md) and [`schemas/canonical_bundle.schema.json`](schemas/canonical_bundle.schema.json) before adding a new adapter.
+
+## Source-Log Adapters
+
+Convert Astra session logs:
+
+```bash
+python adapters/astra_session_adapter.py \
+  --astra-home "$HOME/.astra" \
+  --output-dir output/astra_canonical \
+  --max-traces 10 \
+  --replace
+```
+
+The adapter reads local session JSONL records, truncates long text, and redacts common credential patterns. Always review converted text before sharing or uploading it.
+
+The Codex adapter exposes `convert_rollouts()` for rollout JSONL files. Its regression tests show the expected input shape. Integrations should select only user-owned primary rollouts and exclude delegated subagent logs unless the evaluation design explicitly includes them.
+
+## Langfuse Round Trip
+
+Langfuse is optional. The deterministic Python implementation remains the source of truth for benchmark answers.
+
+Copy `.env.example` values into the current terminal. Do not save real keys in the repository.
+
+```bash
+export LANGFUSE_PUBLIC_KEY="pk-lf-..."
+export LANGFUSE_SECRET_KEY="sk-lf-..."
+export LANGFUSE_BASE_URL="https://your-langfuse-host.example.com"
+```
+
+Preview an upload:
+
+```bash
+python integrations/langfuse_upload.py \
+  --data-dir benchmark_data/simulation/canonical_data \
+  --trace-limit 6
+```
+
+Add `--send` only after reviewing the summary. Then verify inventory, add manual scores in the Langfuse UI, export them, and run local annotation checks:
+
+```bash
+python integrations/langfuse_upload.py --data-dir benchmark_data/simulation/canonical_data --trace-limit 6 --send
+python integrations/langfuse_verify_inventory.py --data-dir benchmark_data/simulation/canonical_data --environment synthetic-simulation-v1
+python integrations/langfuse_export_annotations.py --data-dir benchmark_data/simulation/canonical_data
+python integrations/analyze_annotations.py --data-dir benchmark_data/simulation/canonical_data --expect-min 1
+```
+
+See [`docs/langfuse_workflow.md`](docs/langfuse_workflow.md) for the complete workflow and compatibility notes.
+
+## Data and Security Policy
+
+- No API keys, passwords, private prompts, raw Astra sessions, Codex rollouts, or user identifiers are included.
+- `benchmark_data/simulation/` is an intentionally committed, reproducible synthetic test corpus. Other generated output, upload state, annotation exports, virtual environments, and caches stay under ignored local paths.
+- Synthetic records are marked as synthetic. `Astra` and `Codex` are comparison labels in this corpus, not recorded production results.
+- Real logs must be reviewed for personal information, customer data, secrets, and contractual restrictions before use.
+- A repository license must be selected by the project owner before public release.
+
+## Maintainer Handoff
+
+Start with [`docs/HANDOFF.md`](docs/HANDOFF.md). It lists the release boundary, validation commands, extension points, and the remaining work required for a model-facing benchmark runner.

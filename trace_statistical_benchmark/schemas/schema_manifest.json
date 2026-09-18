@@ -1,0 +1,15 @@
+{
+  "schema_version": "2.0.0",
+  "format": "jsonl",
+  "tables": {
+    "models": {"file": "models.jsonl", "primary_key": "model_id"},
+    "tasks": {"file": "tasks.jsonl", "primary_key": "task_id"},
+    "sessions": {"file": "sessions.jsonl", "primary_key": "session_id"},
+    "traces": {"file": "traces.jsonl", "primary_key": "trace_id"},
+    "observations": {"file": "observations.jsonl", "primary_key": "observation_id"},
+    "generations": {"file": "generations.jsonl", "primary_key": "observation_id"},
+    "tool_calls": {"file": "tool_calls.jsonl", "primary_key": "observation_id"},
+    "model_answers": {"file": "model_answers.jsonl", "primary_key": "answer_id"},
+    "annotations": {"file": "annotations.jsonl", "primary_key": "annotation_id"}
+  }
+}

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Deterministic reference implementations for the baseline trace queries."""
+"""Deterministic reference implementations for trace queries 01-30."""
 
 from __future__ import annotations
 
@@ -370,16 +370,29 @@ def query15(traces: list[dict[str, Any]], observations: list[dict[str, Any]]) ->
     }
 
 
-QUERY_FUNCTIONS: dict[str, Callable[[list[dict[str, Any]], list[dict[str, Any]]], dict[str, Any]]] = {
+BASE_QUERY_FUNCTIONS: dict[str, Callable[[list[dict[str, Any]], list[dict[str, Any]]], dict[str, Any]]] = {
     f"query{i:02d}": globals()[f"query{i:02d}"] for i in range(1, 16)
+}
+
+from advanced_reference_queries import QUERY_FUNCTIONS as ADVANCED_QUERY_FUNCTIONS  # noqa: E402
+
+TASKS = json.loads((Path(__file__).resolve().parent / "query_catalog.json").read_text(encoding="utf-8"))["queries"]
+
+QUERY_FUNCTIONS: dict[str, Callable[..., dict[str, Any]]] = {
+    **BASE_QUERY_FUNCTIONS,
+    **ADVANCED_QUERY_FUNCTIONS,
 }
 
 
 def run_task(task_id: str, data_dir: Path) -> dict[str, Any]:
     if task_id not in QUERY_FUNCTIONS:
         raise ValueError(f"Unknown task: {task_id}")
+    if task_id in ADVANCED_QUERY_FUNCTIONS:
+        from advanced_reference_queries import run_task as run_advanced_task
+
+        return run_advanced_task(task_id, data_dir)
     traces, observations = load_data(data_dir)
-    return QUERY_FUNCTIONS[task_id](traces, observations)
+    return BASE_QUERY_FUNCTIONS[task_id](traces, observations)
 
 
 def cli(default_task_id: str | None = None) -> None:

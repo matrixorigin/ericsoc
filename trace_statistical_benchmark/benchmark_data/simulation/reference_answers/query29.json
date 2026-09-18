@@ -1,0 +1,18 @@
+{
+  "label_field": "answer_correct",
+  "pairs": [
+    {
+      "annotator_a": "synthetic-reviewer-a",
+      "annotator_b": "synthetic-reviewer-b",
+      "discordant_a_positive_only": 652,
+      "discordant_b_positive_only": 631,
+      "holm_adjusted_p_value": 0.576614,
+      "paired_difference_a_minus_b": 0.00474,
+      "positive_rate_a": 0.590293,
+      "positive_rate_b": 0.585553,
+      "raw_mcnemar_p_value": 0.576614,
+      "shared_targets": 4430
+    }
+  ],
+  "warning": null
+}

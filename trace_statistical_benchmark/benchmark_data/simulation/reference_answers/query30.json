@@ -1,0 +1,20 @@
+{
+  "annotation_events": 9510,
+  "ingestion_delay": {
+    "count": 9510,
+    "median_seconds": 91.0,
+    "p95_seconds": 171.0
+  },
+  "revision_delay": {
+    "count": 650,
+    "median_seconds": 5670.0,
+    "p95_seconds": 10200.0
+  },
+  "revision_event_rate": 0.068349,
+  "revision_events": 650,
+  "transition_counts": {
+    "False->True": 250,
+    "True->False": 400
+  },
+  "valid_timing_events": 9510
+}

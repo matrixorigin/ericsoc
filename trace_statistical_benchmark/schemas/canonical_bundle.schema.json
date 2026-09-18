@@ -1,0 +1,178 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/trace-benchmark-v2.json",
+  "title": "Trace Statistical Benchmark Canonical Schema v2",
+  "description": "Logical row schemas used by the trace benchmark JSONL tables.",
+  "$defs": {
+    "nullableString": {"type": ["string", "null"]},
+    "jsonValue": {},
+    "usage": {
+      "type": "object",
+      "properties": {
+        "input": {"type": ["integer", "null"], "minimum": 0},
+        "output": {"type": ["integer", "null"], "minimum": 0},
+        "cache_read": {"type": ["integer", "null"], "minimum": 0}
+      },
+      "additionalProperties": true
+    },
+    "model": {
+      "type": "object",
+      "required": ["model_id", "provider", "name", "version", "configuration"],
+      "properties": {
+        "model_id": {"type": "string", "minLength": 1},
+        "provider": {"type": ["string", "null"]},
+        "name": {"type": "string", "minLength": 1},
+        "version": {"type": ["string", "null"]},
+        "configuration": {"type": "object"}
+      },
+      "additionalProperties": true
+    },
+    "task": {
+      "type": "object",
+      "required": ["task_id", "task_family", "difficulty", "prompt_version", "prompt_text", "mapping_status"],
+      "properties": {
+        "task_id": {"type": "string", "minLength": 1},
+        "task_family": {"type": "string", "minLength": 1},
+        "difficulty": {"enum": ["easy", "medium", "hard", "unknown"]},
+        "prompt_version": {"type": "string", "minLength": 1},
+        "prompt_text": {"type": ["string", "null"]},
+        "reference_outcome": {},
+        "mapping_status": {"type": "string", "minLength": 1},
+        "metadata": {"type": "object"}
+      },
+      "additionalProperties": true
+    },
+    "session": {
+      "type": "object",
+      "required": ["session_id", "source", "start_time", "end_time", "metadata"],
+      "properties": {
+        "session_id": {"type": "string", "minLength": 1},
+        "source": {"type": "string", "minLength": 1},
+        "start_time": {"type": "string", "format": "date-time"},
+        "end_time": {"type": "string", "format": "date-time"},
+        "metadata": {"type": "object"}
+      },
+      "additionalProperties": true
+    },
+    "trace": {
+      "type": "object",
+      "required": ["trace_id", "session_id", "task_id", "model_id", "attempt_number", "status", "start_time", "end_time", "duration_ms", "usage", "metadata"],
+      "properties": {
+        "trace_id": {"type": "string", "minLength": 1},
+        "session_id": {"type": "string", "minLength": 1},
+        "task_id": {"type": "string", "minLength": 1},
+        "model_id": {"type": "string", "minLength": 1},
+        "attempt_number": {"type": "integer", "minimum": 1},
+        "status": {"type": "string", "minLength": 1},
+        "start_time": {"type": "string", "format": "date-time"},
+        "end_time": {"type": "string", "format": "date-time"},
+        "duration_ms": {"type": "number", "minimum": 0},
+        "usage": {"$ref": "#/$defs/usage"},
+        "cost": {"type": ["number", "null"], "minimum": 0},
+        "input": {},
+        "output": {},
+        "error": {},
+        "metadata": {"type": "object"}
+      },
+      "additionalProperties": true
+    },
+    "observation": {
+      "type": "object",
+      "required": ["observation_id", "trace_id", "parent_observation_id", "type", "name", "status", "start_time", "end_time", "metadata"],
+      "properties": {
+        "observation_id": {"type": "string", "minLength": 1},
+        "trace_id": {"type": "string", "minLength": 1},
+        "parent_observation_id": {"$ref": "#/$defs/nullableString"},
+        "type": {"enum": ["span", "generation", "tool", "event"]},
+        "name": {"type": "string", "minLength": 1},
+        "status": {"type": "string", "minLength": 1},
+        "start_time": {"type": "string", "format": "date-time"},
+        "end_time": {"type": "string", "format": "date-time"},
+        "input": {},
+        "output": {},
+        "metadata": {"type": "object"}
+      },
+      "additionalProperties": true
+    },
+    "generation": {
+      "type": "object",
+      "required": ["observation_id", "trace_id", "model_id", "usage", "duration_ms", "metadata"],
+      "properties": {
+        "observation_id": {"type": "string", "minLength": 1},
+        "trace_id": {"type": "string", "minLength": 1},
+        "model_id": {"type": "string", "minLength": 1},
+        "input": {},
+        "output": {},
+        "usage": {"$ref": "#/$defs/usage"},
+        "duration_ms": {"type": "number", "minimum": 0},
+        "metadata": {"type": "object"}
+      },
+      "additionalProperties": true
+    },
+    "toolCall": {
+      "type": "object",
+      "required": ["observation_id", "trace_id", "tool_name", "tool_index", "status", "duration_ms", "metadata"],
+      "properties": {
+        "observation_id": {"type": "string", "minLength": 1},
+        "trace_id": {"type": "string", "minLength": 1},
+        "tool_name": {"type": "string", "minLength": 1},
+        "tool_index": {"type": ["integer", "null"], "minimum": 1},
+        "status": {"type": "string", "minLength": 1},
+        "input": {},
+        "output": {},
+        "duration_ms": {"type": "number", "minimum": 0},
+        "error": {},
+        "metadata": {"type": "object"}
+      },
+      "additionalProperties": true
+    },
+    "modelAnswer": {
+      "type": "object",
+      "required": ["answer_id", "task_id", "trace_id", "model_id", "answer_text", "correct", "grading_version", "metadata"],
+      "properties": {
+        "answer_id": {"type": "string", "minLength": 1},
+        "task_id": {"type": "string", "minLength": 1},
+        "trace_id": {"type": "string", "minLength": 1},
+        "model_id": {"type": "string", "minLength": 1},
+        "answer_text": {"type": ["string", "null"]},
+        "parsed_answer": {},
+        "correct": {"type": ["boolean", "null"]},
+        "grading_version": {"type": ["string", "null"]},
+        "metadata": {"type": "object"}
+      },
+      "additionalProperties": true
+    },
+    "annotation": {
+      "type": "object",
+      "required": ["annotation_id", "target_type", "target_id", "trace_id", "label_schema_version", "label_json", "annotator_id", "annotator_type", "labeled_at", "ingested_at", "source", "supersedes_annotation_id", "retracted", "metadata"],
+      "properties": {
+        "annotation_id": {"type": "string", "minLength": 1},
+        "target_type": {"enum": ["trace", "observation", "session"]},
+        "target_id": {"type": "string", "minLength": 1},
+        "trace_id": {"type": ["string", "null"]},
+        "label_schema_version": {"type": "string", "minLength": 1},
+        "label_json": {
+          "type": "object",
+          "properties": {
+            "answer_correct": {"type": ["boolean", "null"]},
+            "tool_selection": {"enum": ["appropriate", "inappropriate", "not_applicable", "unknown", null]},
+            "error_type": {"type": ["string", "null"]},
+            "severity": {"enum": ["none", "low", "medium", "high", null]},
+            "confidence": {"type": ["number", "null"], "minimum": 0, "maximum": 1}
+          },
+          "additionalProperties": true
+        },
+        "annotator_id": {"type": "string", "minLength": 1},
+        "annotator_type": {"enum": ["human", "llm", "rule", "imported"]},
+        "labeled_at": {"type": "string", "format": "date-time"},
+        "ingested_at": {"type": "string", "format": "date-time"},
+        "source": {"type": "string", "minLength": 1},
+        "supersedes_annotation_id": {"$ref": "#/$defs/nullableString"},
+        "retracted": {"type": "boolean"},
+        "comment": {"type": ["string", "null"]},
+        "metadata": {"type": "object"}
+      },
+      "additionalProperties": true
+    }
+  }
+}

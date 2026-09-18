@@ -1,0 +1,19 @@
+{
+  "bootstrap_95_ci": [
+    -0.074623,
+    0.002498
+  ],
+  "interaction_hard_minus_easy": -0.036946,
+  "model_a": "model-f74f13a218595a3c449e",
+  "model_b": "model-20ad55a40357ef21ba65",
+  "strata": {
+    "easy": {
+      "accuracy_gap_a_minus_b": -0.063631,
+      "n": 1713
+    },
+    "hard": {
+      "accuracy_gap_a_minus_b": -0.100577,
+      "n": 1213
+    }
+  }
+}

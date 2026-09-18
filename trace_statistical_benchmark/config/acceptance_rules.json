@@ -1,0 +1,17 @@
+{
+  "validation_version": "simulation-truth-validation-v1",
+  "dataset_profile": "simulation",
+  "expected_seed": 20260915,
+  "expected_task_count": 4430,
+  "expected_trace_count": 10000,
+  "expected_model_count": 2,
+  "drift_location_tolerance_fraction": 0.10,
+  "null_interaction_absolute_tolerance": 0.10,
+  "uniform_tool_hhi_tolerance": 0.01,
+  "annotation_revision_rate_target": 0.08,
+  "annotation_revision_rate_tolerance": 0.02,
+  "minimum_model_accuracy_gap": 0.03,
+  "minimum_tool_failure_risk_ratio": 5.0,
+  "minimum_annotation_raw_agreement": 0.65,
+  "maximum_annotation_raw_agreement": 0.80
+}

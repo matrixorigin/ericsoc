@@ -1,0 +1,40 @@
+{
+  "failed_tool_calls": 4134,
+  "gini": 0.01403,
+  "gini_bootstrap_95_ci": [
+    0.009482,
+    0.034903
+  ],
+  "hhi": 0.200138,
+  "hhi_bootstrap_95_ci": [
+    0.200065,
+    0.200853
+  ],
+  "tools": [
+    {
+      "failures": 860,
+      "share": 0.208031,
+      "tool_name": "python"
+    },
+    {
+      "failures": 833,
+      "share": 0.2015,
+      "tool_name": "search"
+    },
+    {
+      "failures": 825,
+      "share": 0.199565,
+      "tool_name": "write_file"
+    },
+    {
+      "failures": 824,
+      "share": 0.199323,
+      "tool_name": "read_file"
+    },
+    {
+      "failures": 792,
+      "share": 0.191582,
+      "tool_name": "shell"
+    }
+  ]
+}

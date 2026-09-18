@@ -1,0 +1,2 @@
+{"configuration": {"synthetic_parameters": {"ability": 0.78, "cost": 1.0, "latency": 1.1, "tool_skill": 0.89}, "temperature": 0.2}, "model_id": "model-f74f13a218595a3c449e", "name": "Astra", "provider": "matrixorigin", "version": "sim-v1"}
+{"configuration": {"synthetic_parameters": {"ability": 0.84, "cost": 1.25, "latency": 0.92, "tool_skill": 0.93}, "temperature": 0.2}, "model_id": "model-20ad55a40357ef21ba65", "name": "Codex", "provider": "openai", "version": "sim-v1"}

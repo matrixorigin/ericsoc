@@ -1,0 +1,15 @@
+{
+  "fisher_exact_p_value": 0.0,
+  "risk_ratio": 111.442099,
+  "risk_ratio_95_ci": [
+    84.920522,
+    146.246647
+  ],
+  "table": {
+    "no_tool_failure_and_task_failure": 52,
+    "no_tool_failure_and_task_success": 7547,
+    "tool_failure_and_task_failure": 1831,
+    "tool_failure_and_task_success": 570
+  },
+  "zero_cell_correction": null
+}

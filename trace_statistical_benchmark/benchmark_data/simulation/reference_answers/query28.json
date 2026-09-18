@@ -1,0 +1,45 @@
+{
+  "annotator_pairs": [
+    {
+      "annotator_a": "synthetic-reviewer-a",
+      "annotator_b": "synthetic-reviewer-b",
+      "cohen_kappa": 0.402299,
+      "raw_agreement": 0.710384,
+      "shared_targets": 4430,
+      "strata": [
+        {
+          "category": "code_debugging",
+          "cohen_kappa": 0.435964,
+          "n": 886,
+          "raw_agreement": 0.725734
+        },
+        {
+          "category": "data_analysis",
+          "cohen_kappa": 0.406998,
+          "n": 886,
+          "raw_agreement": 0.711061
+        },
+        {
+          "category": "notebook_editing",
+          "cohen_kappa": 0.424501,
+          "n": 886,
+          "raw_agreement": 0.723476
+        },
+        {
+          "category": "planning",
+          "cohen_kappa": 0.393866,
+          "n": 886,
+          "raw_agreement": 0.706546
+        },
+        {
+          "category": "retrieval",
+          "cohen_kappa": 0.350512,
+          "n": 886,
+          "raw_agreement": 0.685102
+        }
+      ]
+    }
+  ],
+  "label_field": "answer_correct",
+  "warning": null
+}
